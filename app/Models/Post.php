@@ -11,9 +11,16 @@ class Post extends Model
     protected $guarded = array('id');
     protected $fillable = [
         'content',
+        'user_id',
     ];
 
     public static $rules = [
         'content' => 'required|max:120',
+        'user_id' => 'required',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

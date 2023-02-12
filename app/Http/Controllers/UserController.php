@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $posts = Post::all();
-        $posts = Post::with('user')->get();
-
+        // $users = User::all();
+        $users = User::with('posts')->get();
         return response()->json([
-            'posts' => $posts
+            'users' => $users
         ], 200);
     }
 
@@ -30,25 +29,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->only(['name', 'email', 'password']);
+        User::create($user);
+
+        return response()->json([
+            'message' => 'success'
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $post = Post::find($id)->user;
-        if ($post) {
-            return response()->json(
-                [
-                    'posts' => $post
-                ],
-                200
-            );
+        $user = User::find($id)->posts;
+        if ($user) {
+            return response()->json([
+                'data' => $user
+            ], 200);
         } else {
             return response()->json([
                 'message' => 'Not found',
@@ -60,10 +61,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -71,10 +72,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         //
     }

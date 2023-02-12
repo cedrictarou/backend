@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+// posts用のルート
 Route::apiResource('/v1/posts', PostController::class);
+
+// users用のルート
+Route::apiResource('/v1/users', UserController::class);
