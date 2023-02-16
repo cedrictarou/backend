@@ -23,4 +23,5 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('/v1/posts', PostController::class);
 
 // users用のルート
-Route::apiResource('/v1/users', UserController::class);
+// Route::apiResource('/v1/users', UserController::class);
+Route::get('/v1/users', [UserController::class, "index"]);

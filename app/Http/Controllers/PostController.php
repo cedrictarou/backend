@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,8 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $posts = Post::all();
-        $posts = Post::with('user')->get();
+        // $posts = Post::with('user:id,name')->select('id', 'content', 'user_id')->orderBy("id", "desc")->get();
+        // $posts = Post::with('user')->orderBy("id", "desc")->get();
+        $posts = PostResource::collection(Post::all());
 
         return response()->json([
             'posts' => $posts
@@ -30,7 +33,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = $request->get("content");
+        $uid = $request->get("uid");
+        $user = User::where("uid", $uid)->first();
+
+        $post = Post::create([
+            "content" => $content,
+            "user_id" => $user->id,
+        ]);
+
+        return response()->json(["post" => $post], 201);
     }
 
     /**

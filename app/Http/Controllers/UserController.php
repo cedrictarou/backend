@@ -35,9 +35,7 @@ class UserController extends Controller
         // return response()->json([
         //     'message' => 'success'
         // ], 201);
-        return response()->json([
-            'message' => 'login'
-        ], 201);
+
     }
 
     /**
@@ -48,16 +46,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id)->posts;
-        if ($user) {
-            return response()->json([
-                'data' => $user
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Not found',
-            ], 404);
-        }
+        // $user = User::find($id)->posts;
+        // if ($user) {
+        //     return response()->json([
+        //         'data' => $user
+        //     ], 200);
+        // } else {
+        //     return response()->json([
+        //         'message' => 'Not found',
+        //     ], 404);
+        // }
     }
 
     /**
