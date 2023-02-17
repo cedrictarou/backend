@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,5 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('/v1/posts', PostController::class);
 
 // users用のルート
-// Route::apiResource('/v1/users', UserController::class);
 Route::get('/v1/users', [UserController::class, "index"]);
+
+// lies用のルート
+Route::post('/v1/like/{postId}', [LikeController::class, 'store']);
+Route::post('/v1/unlike/{postId}', [LikeController::class, 'destroy']);

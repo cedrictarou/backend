@@ -16,8 +16,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        // $posts = Post::with('user:id,name')->select('id', 'content', 'user_id')->orderBy("id", "desc")->get();
-        // $posts = Post::with('user')->orderBy("id", "desc")->get();
         $posts = PostResource::collection(Post::all());
 
         return response()->json([
