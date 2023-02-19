@@ -32,15 +32,15 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $content = $request->get("content");
-        $uid = $request->get("uid");
-        $user = User::where("uid", $uid)->first();
+        $email = $request->get("email");
+        $user = User::where("email", $email)->first();
 
         $post = Post::create([
             "content" => $content,
-            "user_id" => $user->id,
+            "user_id" => $user['id'],
         ]);
 
-        return response()->json(["post" => $post], 201);
+        return new PostResource($post);
     }
 
     /**
@@ -51,19 +51,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id)->user;
-        if ($post) {
-            return response()->json(
-                [
-                    'posts' => $post
-                ],
-                200
-            );
-        } else {
-            return response()->json([
-                'message' => 'Not found',
-            ], 404);
-        }
+        $post = Post::findOrFail($id);
+        return new PostResource($post);
     }
 
     /**
