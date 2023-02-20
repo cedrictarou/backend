@@ -15,20 +15,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $email = 'yamada@email.com';
-        $user = User::where('email', $email)->first();
-        $current_user_id = $user['id'];
-        $posts = PostResource::collection(Post::all(), $current_user_id);
-
-        // $posts = Post::with(['likes' => function ($query) use ($current_user_id) {
-        //     $query->where('user_id', $current_user_id)->exists();
-        // }])->get();
+        $posts = PostResource::collection(Post::all());
+        $likes = Like::select('id', 'user_id', 'post_id')->get();
 
         return response()->json([
-            'user' => $user,
             'posts' => $posts,
+            'likes' => $likes,
         ], 200);
     }
 
