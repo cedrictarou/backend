@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,12 +15,20 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = PostResource::collection(Post::all());
+        $email = 'yamada@email.com';
+        $user = User::where('email', $email)->first();
+        $current_user_id = $user['id'];
+        $posts = PostResource::collection(Post::all(), $current_user_id);
+
+        // $posts = Post::with(['likes' => function ($query) use ($current_user_id) {
+        //     $query->where('user_id', $current_user_id)->exists();
+        // }])->get();
 
         return response()->json([
-            'posts' => $posts
+            'user' => $user,
+            'posts' => $posts,
         ], 200);
     }
 

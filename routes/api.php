@@ -28,4 +28,4 @@ Route::get('/v1/users', [UserController::class, "index"]);
 
 // lies用のルート
 Route::post('/v1/like/{postId}', [LikeController::class, 'store']);
-Route::post('/v1/unlike/{postId}', [LikeController::class, 'destroy']);
+Route::delete('/v1/unlike/{postId}', [LikeController::class, 'destroy']);

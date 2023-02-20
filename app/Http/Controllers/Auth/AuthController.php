@@ -14,7 +14,7 @@ class AuthController extends Controller
         $user_data = $request->all();
         $user = User::create($user_data);
         // $message = "success";
-        // return  response()->json(compact("message", "user"), 201);
+        // return  response()->json(compact("user_data"), 201);
         return response()->json([
             'data' => $user
         ], 201);
