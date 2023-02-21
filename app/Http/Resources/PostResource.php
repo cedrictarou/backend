@@ -17,11 +17,14 @@ class PostResource extends JsonResource
 
     public function toArray($request)
     {
+
+
         return [
             'id' => $this->id,
             'content' => $this->content,
             'name' => $this->user->name,
             'likeCount' => $this->likes->count(),
+            'isLikedBy' => $this->likes()->select('user_id')->get(),
         ];
     }
 }

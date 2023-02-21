@@ -10,19 +10,19 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // $user_data = $request->only("name", "email", "password", "uid");
         $user_data = $request->all();
         $user = User::create($user_data);
-        // $message = "success";
-        // return  response()->json(compact("user_data"), 201);
+
         return response()->json([
             'data' => $user
         ], 201);
     }
-    public function login()
+    public function login(Request $request)
     {
+        $user_email = $request->get('email');
+        $user = User::where('email', $user_email)->get();
         $message = "login success";
-        return response()->json(compact('message'), 200);
+        return response()->json(compact('message', 'user'), 200);
     }
     public function logout()
     {
