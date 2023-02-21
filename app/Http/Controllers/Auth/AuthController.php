@@ -13,16 +13,13 @@ class AuthController extends Controller
         $user_data = $request->all();
         $user = User::create($user_data);
 
-        return response()->json([
-            'data' => $user
-        ], 201);
+        return response()->json(compact('user'), 200);
     }
     public function login(Request $request)
     {
         $user_email = $request->get('email');
         $user = User::where('email', $user_email)->get();
-        $message = "login success";
-        return response()->json(compact('message', 'user'), 200);
+        return response()->json(compact('user'), 200);
     }
     public function logout()
     {

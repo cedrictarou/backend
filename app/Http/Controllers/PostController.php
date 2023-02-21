@@ -18,11 +18,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = PostResource::collection(Post::all());
-        $likes = Like::select('id', 'user_id', 'post_id')->get();
-
         return response()->json([
             'posts' => $posts,
-            'likes' => $likes,
         ], 200);
     }
 
