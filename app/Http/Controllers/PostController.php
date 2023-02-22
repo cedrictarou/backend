@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
@@ -49,10 +50,15 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($postId)
     {
-        $post = Post::findOrFail($id);
-        return new PostResource($post);
+        $post =  new PostResource(Post::findOrFail($postId));
+
+        $comments = Comment::where('post_id', $postId)->with(['user' => function ($query) {
+            $query->select('id', 'name')->get();
+        }])->select('id', 'comment', 'user_id')->get();
+
+        return response()->json(compact('post', 'comments'), 200);
     }
 
     /**
@@ -62,10 +68,6 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -73,8 +75,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($postId)
     {
-        //
+        $post = Post::find($postId);
+        $post->delete();
+
+        return response()->noContent();
     }
 }
