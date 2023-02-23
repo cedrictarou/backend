@@ -24,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 // posts用のルート
 Route::apiResource('/v1/posts', PostController::class);
 
-// users用のルート
-Route::get('/v1/users', [UserController::class, "index"]);
-
 // likes用のルート
 Route::post('/v1/like/{postId}', [LikeController::class, 'store']);
 Route::delete('/v1/unlike/{postId}', [LikeController::class, 'destroy']);

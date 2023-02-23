@@ -21,9 +21,4 @@ class AuthController extends Controller
         $user = User::where('email', $user_email)->get();
         return response()->json(compact('user'), 200);
     }
-    public function logout()
-    {
-        $message = "logout success";
-        return response()->json(compact('message'), 200);
-    }
 }

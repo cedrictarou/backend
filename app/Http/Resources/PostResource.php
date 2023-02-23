@@ -23,9 +23,9 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'name' => $this->user->name,
+            'userId' => $this->user->id,
             'likeCount' => $this->likes->count(),
             'isLikedBy' => $this->likes()->select('user_id')->get(),
-            // 'comments' => $this->comments()->select('id', 'comment')->get(),
         ];
     }
 }
