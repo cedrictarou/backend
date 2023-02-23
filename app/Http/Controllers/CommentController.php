@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::all();
+        $comments = CommentResource::collection(Comment::all());
 
         return response()->json(compact('comments'));
     }
@@ -17,8 +18,8 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        Comment::create($data);
+        $comment = Comment::create($data);
 
-        return response()->noContent();
+        return new CommentResource($comment);
     }
 }

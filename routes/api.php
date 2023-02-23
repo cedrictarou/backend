@@ -29,4 +29,5 @@ Route::post('/v1/like/{postId}', [LikeController::class, 'store']);
 Route::delete('/v1/unlike/{postId}', [LikeController::class, 'destroy']);
 
 // comments用のルート
+Route::get('/v1/comments', [CommentController::class, 'index']);
 Route::post('/v1/comments/{postId}', [CommentController::class, 'store']);

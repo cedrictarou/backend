@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Like;
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +12,16 @@ class PostResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
-            'name' => $this->user->name,
-            'userId' => $this->user->id,
-            'likeCount' => $this->likes->count(),
-            'isLikedBy' => $this->likes()->select('user_id')->get(),
+            'comment' => $this->comment,
+            'userId' => $this->user_id,
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+            ]
         ];
     }
 }
